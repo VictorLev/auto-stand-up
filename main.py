@@ -98,6 +98,40 @@ for day in Week:
         },
         {
             "object": "block",
+            "type": "paragraph",
+            "paragraph": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {"content": "Red Alerts"}
+                    }
+                ]
+            }
+        },
+        {
+            "object": "block",
+            "type": "bulleted_list_item",
+            "bulleted_list_item": {"rich_text": []}
+        },
+        {
+            "object": "block",
+            "type": "bulleted_list_item",
+            "bulleted_list_item": {"rich_text": []}
+        },
+        {
+            "object": "block",
+            "type": "paragraph",
+            "paragraph": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {"content": "Yellow Alerts"}
+                    }
+                ]
+            }
+        },
+        {
+            "object": "block",
             "type": "bulleted_list_item",
             "bulleted_list_item": {"rich_text": []}
         },
