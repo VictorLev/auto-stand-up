@@ -62,6 +62,7 @@ for day in Week:
     block_id = response.get("results")[0].get("id")
 
     inner_block = [
+        # To Do Block
         {
             "object": "block",
             "type": "heading_3",
@@ -79,6 +80,7 @@ for day in Week:
             "type": "to_do",
             "to_do": {"rich_text": [], "checked": False}
         },
+        # What Happened Block
         {
             "object": "block",
             "type": "to_do",
@@ -115,11 +117,6 @@ for day in Week:
         },
         {
             "object": "block",
-            "type": "bulleted_list_item",
-            "bulleted_list_item": {"rich_text": []}
-        },
-        {
-            "object": "block",
             "type": "paragraph",
             "paragraph": {
                 "rich_text": [
@@ -129,11 +126,6 @@ for day in Week:
                     }
                 ]
             }
-        },
-        {
-            "object": "block",
-            "type": "bulleted_list_item",
-            "bulleted_list_item": {"rich_text": []}
         },
         {
             "object": "block",
