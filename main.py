@@ -42,6 +42,7 @@ page = notion.pages.create(
 
 for day in Week:
     # Create Day Title
+    
     week_block = [
         {
             "object": "block",
@@ -62,6 +63,59 @@ for day in Week:
     block_id = response.get("results")[0].get("id")
 
     inner_block = [
+        {
+            "object": "block",
+            "type": "heading_3",
+            "heading_3": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {"content": "Daily Checks"}
+                    }
+                ]
+            }
+        },
+        {
+            "object": "block",
+            "type": "to_do",
+            "to_do": {"rich_text": ["Azure Planned Maintenance"], "checked": False}
+        },
+        {
+            "object": "block",
+            "type": "to_do",
+            "to_do": {"rich_text": ["Azure Services"], "checked": False}
+        },
+        {
+            "object": "block",
+            "type": "to_do",
+            "to_do": {"rich_text": ["Suggested checks (warn/critical)"], "checked": False}
+        },
+        {
+            "object": "block",
+            "type": "to_do",
+            "to_do": {"rich_text": ["Triggered Monitors for Disk and PVC Used"], "checked": False}
+        },
+        {
+            "object": "block",
+            "type": "to_do",
+            "to_do": {"rich_text": ["New Relic checks"], "checked": False}
+        },
+        {
+            "object": "block",
+            "type": "to_do",
+            "to_do": {"rich_text": ["Datadog checks"], "checked": False}
+        },
+        {
+            "object": "block",
+            "type": "to_do",
+            "to_do": {"rich_text": ["SSL/TLS Certificate Overview"], "checked": False}
+        },
+        {
+            "object": "block",
+            "type": "to_do",
+            "to_do": {"rich_text": ["Ongoing Issues"], "checked": False}
+        },
+
         # To Do Block
         {
             "object": "block",
@@ -70,7 +124,7 @@ for day in Week:
                 "rich_text": [
                     {
                         "type": "text",
-                        "text": {"content": "To Do"}
+                        "text": {"content": "Ongoing Tasks"}
                     }
                 ]
             }
