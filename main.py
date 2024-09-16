@@ -41,6 +41,7 @@ page = notion.pages.create(
 )
 
 for day in Week:
+
     # Create Day Title
     
     week_block = [
@@ -62,61 +63,43 @@ for day in Week:
     response = notion.blocks.children.append(block_id=page['id'], children=week_block)
     block_id = response.get("results")[0].get("id")
 
+    to_do_items = [
+    "Azure Planned Maintenance / Azure Services",
+    "Suggested checks (warn/critical) / Triggered Monitors for Disk and PVC Used",
+    "New Relic checks / Datadog checks",
+    "SSL/TLS Certificate Overview / Ongoing Issues"
+    ]
+    to_do_blocks = []
+
+    for item in to_do_items:
+        block = {
+            "object": "block",
+            "type": "to_do",
+            "to_do": {
+                "rich_text": [{
+                    "type": "text",
+                    "text": {"content": item}
+                }],
+                "checked": False
+            }
+        }
+        to_do_blocks.append(block)
+
     inner_block = [
         # Daily Checks Block
         {
             "object": "block",
             "type": "heading_3",
             "heading_3": {
-                "rich_text": [
-                    {
-                        "type": "text",
-                        "text": {"content": "Daily Checks"}
-                    }
-                ]
+                "rich_text": [{
+                    "type": "text",
+                    "text": {"content": "Daily Checks"}
+                }]
             }
-        },
-        {
-            "object": "block",
-            "type": "to_do",
-            "to_do": {"rich_text": ["Azure Planned Maintenance"], "checked": False}
-        },
-        {
-            "object": "block",
-            "type": "to_do",
-            "to_do": {"rich_text": ["Azure Services"], "checked": False}
-        },
-        {
-            "object": "block",
-            "type": "to_do",
-            "to_do": {"rich_text": ["Suggested checks (warn/critical)"], "checked": False}
-        },
-        {
-            "object": "block",
-            "type": "to_do",
-            "to_do": {"rich_text": ["Triggered Monitors for Disk and PVC Used"], "checked": False}
-        },
-        {
-            "object": "block",
-            "type": "to_do",
-            "to_do": {"rich_text": ["New Relic checks"], "checked": False}
-        },
-        {
-            "object": "block",
-            "type": "to_do",
-            "to_do": {"rich_text": ["Datadog checks"], "checked": False}
-        },
-        {
-            "object": "block",
-            "type": "to_do",
-            "to_do": {"rich_text": ["SSL/TLS Certificate Overview"], "checked": False}
-        },
-        {
-            "object": "block",
-            "type": "to_do",
-            "to_do": {"rich_text": ["Ongoing Issues"], "checked": False}
-        },
-
+        }
+        ,
+        *to_do_blocks
+        ,
         # To Do Block
         {
             "object": "block",
@@ -184,15 +167,22 @@ for day in Week:
             "bulleted_list_item": {"rich_text": []}
         },
         
-        # Next Week Block
+
+    ]
+
+    notion.blocks.children.append(block_id=block_id, children=inner_block)
+
+notion.blocks.children.append(block_id=block_id, children=
+    [
+    # Next Week Block
         {
             "object": "block",
-            "type": "paragraph",
-            "paragraph": {
+            "type": "heading_3",
+            "heading_3": {
                 "rich_text": [
                     {
                         "type": "text",
-                        "text": {"content": "Next week"}
+                        "text": {"content": "Next week items"}
                     }
                 ]
             }
@@ -203,5 +193,4 @@ for day in Week:
             "bulleted_list_item": {"rich_text": []}
         }
     ]
-
-    notion.blocks.children.append(block_id=block_id, children=inner_block)
+)
