@@ -172,7 +172,7 @@ for day in Week:
 
     notion.blocks.children.append(block_id=block_id, children=inner_block)
 
-notion.blocks.children.append(block_id=block_id, children=
+notion.blocks.children.append(block_id=page['id'], children=
     [
     # Next Week Block
         {
