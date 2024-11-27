@@ -66,7 +66,7 @@ for day in Week:
     to_do_items = [
     "Azure Planned Maintenance / Azure Services",
     "Suggested checks (warn/critical) / Triggered Monitors for Disk and PVC Used",
-    "New Relic checks / Datadog checks",
+    "New Relic checks ",
     "SSL/TLS Certificate Overview / Ongoing Issues"
     ]
     to_do_blocks = []
