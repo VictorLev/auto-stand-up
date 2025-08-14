@@ -26,4 +26,4 @@ jobs:
       env:
         NOTION_KEY: ${{ secrets.NOTION_KEY }}
         STANDUP_PAGE_ID: ${{ secrets.STANDUP_PAGE_ID }}
-      run: python your_script_name.py
+      run: python main.py
