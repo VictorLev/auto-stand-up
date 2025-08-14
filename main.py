@@ -138,7 +138,7 @@ for day in Week:
                 "rich_text": [
                     {
                         "type": "text",
-                        "text": {"content": "Red Alerts"}
+                        "text": {"content": "Morning"}
                     }
                 ]
             }
@@ -155,7 +155,7 @@ for day in Week:
                 "rich_text": [
                     {
                         "type": "text",
-                        "text": {"content": "Yellow Alerts"}
+                        "text": {"content": "Aternoon"}
                     }
                 ]
             }
