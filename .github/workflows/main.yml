@@ -1,0 +1,30 @@
+name: Auto Standup
+
+on:
+  workflow_dispatch: # Run manually
+  schedule:
+    - cron: '0 9 * * 1' # Every Monday at 9:00 UTC
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        pip install python-dotenv notion-client
+
+    - name: Run standup script
+      env:
+        NOTION_KEY: ${{ secrets.NOTION_KEY }}
+        STANDUP_PAGE_ID: ${{ secrets.STANDUP_PAGE_ID }}
+        ARCHIVE_PAGE_ID: ${{ secrets.ARCHIVE_PAGE_ID }}
+      run: python main.py
