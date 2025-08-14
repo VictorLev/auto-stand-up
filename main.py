@@ -9,7 +9,6 @@ load_dotenv()
 # Initialize the client with your Notion API key
 notion = Client(auth=os.getenv("NOTION_KEY"))
 spandupPageId = os.getenv("STANDUP_PAGE_ID")
-archivePageId = os.getenv("ARCHIVE_PAGE_ID")
 today  = str(date.today())
 
 Week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
@@ -43,7 +42,7 @@ page = notion.pages.create(
 for day in Week:
 
     # Create Day Title
-    
+
     week_block = [
         {
             "object": "block",
@@ -166,7 +165,7 @@ for day in Week:
             "type": "bulleted_list_item",
             "bulleted_list_item": {"rich_text": []}
         },
-        
+
 
     ]
 
