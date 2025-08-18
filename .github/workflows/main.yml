@@ -3,7 +3,7 @@ name: Auto Standup
 on:
   workflow_dispatch:    # ✅ Allows manual run from GitHub Actions UI
   schedule:
-    - cron: '0 9 * * 1' # ✅ Every Monday at 9:00 UTC
+    - cron: '0 9 * * 1' # ✅ Every Monday at 9:00 UTC (5 AM EST)
 
 jobs:
   run:
