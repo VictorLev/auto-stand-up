@@ -63,10 +63,10 @@ for day in Week:
     block_id = response.get("results")[0].get("id")
 
     to_do_items = [
-    "Azure Planned Maintenance / Azure Services",
-    "Suggested checks (warn/critical)",
-    "Triggered Monitors for Disk and PVC Used",
-    "SSL/TLS Certificate Overview / Ongoing Issues"
+    "Touch typing practice",
+    "Check emails",
+    "Write Pending Tasks",
+    "Timesheet",
     ]
     to_do_blocks = []
 
@@ -107,7 +107,7 @@ for day in Week:
                 "rich_text": [
                     {
                         "type": "text",
-                        "text": {"content": "Ongoing Tasks"}
+                        "text": {"content": "Pending Tasks"}
                     }
                 ]
             }
@@ -155,7 +155,7 @@ for day in Week:
                 "rich_text": [
                     {
                         "type": "text",
-                        "text": {"content": "Aternoon"}
+                        "text": {"content": "Afternoon"}
                     }
                 ]
             }
