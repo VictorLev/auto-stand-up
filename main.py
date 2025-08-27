@@ -66,8 +66,9 @@ for day in Week:
     "Touch typing practice",
     "Check emails",
     "Write Pending Tasks",
-    "Timesheet",
     ]
+    if day == "Friday" : to_do_items.append("Timesheet")
+
     to_do_blocks = []
 
     for item in to_do_items:
