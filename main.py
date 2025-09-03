@@ -63,8 +63,6 @@ for day in Week:
     block_id = response.get("results")[0].get("id")
 
     to_do_items = [
-    "Touch typing practice",
-    "Check emails",
     "Write Pending Tasks",
     ]
     if day == "Friday" : to_do_items.append("Timesheet")
