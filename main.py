@@ -63,7 +63,7 @@ for day in Week:
     block_id = response.get("results")[0].get("id")
 
     to_do_items = [
-    "Write Pending Tasks",
+    "Check Emails",
     ]
     if day == "Friday" : to_do_items.append("Timesheet")
 
@@ -98,26 +98,8 @@ for day in Week:
         ,
         *to_do_blocks
         ,
-        # To Do Block
-        {
-            "object": "block",
-            "type": "heading_3",
-            "heading_3": {
-                "rich_text": [
-                    {
-                        "type": "text",
-                        "text": {"content": "Pending Tasks"}
-                    }
-                ]
-            }
-        },
-        {
-            "object": "block",
-            "type": "to_do",
-            "to_do": {"rich_text": [], "checked": False}
-        },
 
-        # What Happened Block
+        # To Dos Block
         {
             "object": "block",
             "type": "heading_3",
@@ -125,7 +107,7 @@ for day in Week:
                 "rich_text": [
                     {
                         "type": "text",
-                        "text": {"content": "What Happened"}
+                        "text": {"content": "To Dos"}
                     }
                 ]
             }
@@ -144,8 +126,8 @@ for day in Week:
         },
         {
             "object": "block",
-            "type": "bulleted_list_item",
-            "bulleted_list_item": {"rich_text": []}
+            "type": "to_do",
+             "to_do": {"rich_text": [], "checked": False}
         },
         {
             "object": "block",
@@ -161,8 +143,8 @@ for day in Week:
         },
         {
             "object": "block",
-            "type": "bulleted_list_item",
-            "bulleted_list_item": {"rich_text": []}
+            "type": "to_do",
+             "to_do": {"rich_text": [], "checked": False}
         },
 
 
