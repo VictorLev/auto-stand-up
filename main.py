@@ -147,7 +147,23 @@ for day in Week:
              "to_do": {"rich_text": [], "checked": False}
         },
 
-
+        # Notes Block
+        {
+            "object": "block",
+            "type": "heading_3",
+            "heading_3": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {"content": "Notes"}
+                    }
+            }
+        },
+        {
+            "object": "block",
+            "type": "to_do",
+                "to_do": {"rich_text": []}
+        }
     ]
 
     notion.blocks.children.append(block_id=block_id, children=inner_block)
