@@ -157,6 +157,7 @@ for day in Week:
                         "type": "text",
                         "text": {"content": "Notes"}
                     }
+                ]
             }
         },
         {
