@@ -162,8 +162,8 @@ for day in Week:
         },
         {
             "object": "block",
-            "type": "to_do",
-                "to_do": {"rich_text": []}
+            "type": "bulleted_list_item",
+                "bulleted_list_item": {"rich_text": []}
         }
     ]
 
