@@ -23,7 +23,7 @@ page = notion.pages.create(
             "title": [
                 {
                     "text": {
-                        "content": "Week of ",
+                        "content": "📋 Week of ",
                     }
                 },
                 {
@@ -39,6 +39,27 @@ page = notion.pages.create(
     }
 )
 
+# Notes section at the top of the page
+notion.blocks.children.append(block_id=page['id'], children=[
+    {
+        "object": "block",
+        "type": "callout",
+        "callout": {
+            "rich_text": [{"type": "text", "text": {"content": ""}}],
+            "icon": {"type": "emoji", "emoji": "📓"},
+            "color": "default"
+        }
+    }
+])
+
+day_emojis = {
+    "Monday": "🌱",
+    "Tuesday": "🔥",
+    "Wednesday": "⚡",
+    "Thursday": "🎯",
+    "Friday": "🎉"
+}
+
 for day in Week:
 
     # Create Day Title
@@ -52,7 +73,7 @@ for day in Week:
                     {
                         "type": "text",
                         "text": {
-                            "content": day
+                            "content": f"{day_emojis[day]} {day}"
                         }
                     }
                 ]
@@ -63,9 +84,10 @@ for day in Week:
     block_id = response.get("results")[0].get("id")
 
     to_do_items = [
-    "Check Emails",
+        "📧 Check Emails",
+        "🤖 AI Champion task",
     ]
-    if day == "Friday" : to_do_items.append("Timesheet")
+    if day == "Friday": to_do_items.append("⏱️ Timesheet")
 
     to_do_blocks = []
 
@@ -91,13 +113,11 @@ for day in Week:
             "heading_3": {
                 "rich_text": [{
                     "type": "text",
-                    "text": {"content": "Daily Checks"}
+                    "text": {"content": "✅ Daily Checks"}
                 }]
             }
-        }
-        ,
-        *to_do_blocks
-        ,
+        },
+        *to_do_blocks,
 
         # To Dos Block
         {
@@ -107,7 +127,7 @@ for day in Week:
                 "rich_text": [
                     {
                         "type": "text",
-                        "text": {"content": "To Dos"}
+                        "text": {"content": "📝 To Dos"}
                     }
                 ]
             }
@@ -119,15 +139,10 @@ for day in Week:
                 "rich_text": [
                     {
                         "type": "text",
-                        "text": {"content": "Morning"}
+                        "text": {"content": "☀️ Morning"}
                     }
                 ]
             }
-        },
-        {
-            "object": "block",
-            "type": "to_do",
-             "to_do": {"rich_text": [], "checked": False}
         },
         {
             "object": "block",
@@ -136,35 +151,11 @@ for day in Week:
                 "rich_text": [
                     {
                         "type": "text",
-                        "text": {"content": "Afternoon"}
+                        "text": {"content": "🌆 Afternoon"}
                     }
                 ]
             }
         },
-        {
-            "object": "block",
-            "type": "to_do",
-             "to_do": {"rich_text": [], "checked": False}
-        },
-
-        # Notes Block
-        {
-            "object": "block",
-            "type": "heading_3",
-            "heading_3": {
-                "rich_text": [
-                    {
-                        "type": "text",
-                        "text": {"content": "Notes"}
-                    }
-                ]
-            }
-        },
-        {
-            "object": "block",
-            "type": "bulleted_list_item",
-                "bulleted_list_item": {"rich_text": []}
-        }
     ]
 
     notion.blocks.children.append(block_id=block_id, children=inner_block)
@@ -179,7 +170,7 @@ notion.blocks.children.append(block_id=page['id'], children=
                 "rich_text": [
                     {
                         "type": "text",
-                        "text": {"content": "Next week items"}
+                        "text": {"content": "🔮 Next week items"}
                     }
                 ]
             }
