@@ -43,12 +43,15 @@ page = notion.pages.create(
 notion.blocks.children.append(block_id=page['id'], children=[
     {
         "object": "block",
-        "type": "callout",
-        "callout": {
-            "rich_text": [{"type": "text", "text": {"content": ""}}],
-            "icon": {"type": "emoji", "emoji": "📓"},
-            "color": "default"
+        "type": "heading_2",
+        "heading_2": {
+            "rich_text": [{"type": "text", "text": {"content": "📓 Notes"}}]
         }
+    },
+    {
+        "object": "block",
+        "type": "bulleted_list_item",
+        "bulleted_list_item": {"rich_text": []}
     }
 ])
 
@@ -67,8 +70,8 @@ for day in Week:
     week_block = [
         {
             "object": "block",
-            "type": "toggle",
-            "toggle": {
+            "type": "heading_1",
+            "heading_1": {
                 "rich_text": [
                     {
                         "type": "text",
@@ -76,7 +79,8 @@ for day in Week:
                             "content": f"{day_emojis[day]} {day}"
                         }
                     }
-                ]
+                ],
+                "is_toggleable": True
             }
         }
     ]
@@ -109,8 +113,8 @@ for day in Week:
         # Daily Checks Block
         {
             "object": "block",
-            "type": "heading_3",
-            "heading_3": {
+            "type": "heading_2",
+            "heading_2": {
                 "rich_text": [{
                     "type": "text",
                     "text": {"content": "✅ Daily Checks"}
@@ -122,8 +126,8 @@ for day in Week:
         # To Dos Block
         {
             "object": "block",
-            "type": "heading_3",
-            "heading_3": {
+            "type": "heading_2",
+            "heading_2": {
                 "rich_text": [
                     {
                         "type": "text",
@@ -134,8 +138,8 @@ for day in Week:
         },
         {
             "object": "block",
-            "type": "paragraph",
-            "paragraph": {
+            "type": "heading_3",
+            "heading_3": {
                 "rich_text": [
                     {
                         "type": "text",
@@ -146,8 +150,8 @@ for day in Week:
         },
         {
             "object": "block",
-            "type": "paragraph",
-            "paragraph": {
+            "type": "heading_3",
+            "heading_3": {
                 "rich_text": [
                     {
                         "type": "text",
@@ -165,8 +169,8 @@ notion.blocks.children.append(block_id=page['id'], children=
     # Next Week Block
         {
             "object": "block",
-            "type": "heading_3",
-            "heading_3": {
+            "type": "heading_2",
+            "heading_2": {
                 "rich_text": [
                     {
                         "type": "text",
