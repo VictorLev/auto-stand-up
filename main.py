@@ -66,7 +66,7 @@ for day in Week:
         {
             "object": "block",
             "type": "heading_2",
-            "heading_1": {
+            "heading_2": {
                 "rich_text": [
                     {
                         "type": "text",
