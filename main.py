@@ -83,13 +83,15 @@ for day in Week:
     block_id = response.get("results")[0].get("id")
 
     daily_items = [
-        {"object": "block", "type": "to_do", "to_do": {"rich_text": [{"type": "text", "text": {"content": "📧 Vérifier les courriels"}}], "checked": False}}
+        {"object": "block", "type": "to_do", "to_do": {"rich_text": [{"type": "text", "text": {"content": "📧 Vérifier les courriels"}}], "checked": False}},
+        {"object": "block", "type": "to_do", "to_do": {"rich_text": [{"type": "text", "text": {"content": "📅 Planifier ta journée"}}], "checked": False}},
+        {"object": "block", "type": "to_do", "to_do": {"rich_text": [{"type": "text", "text": {"content": "🤝 Réunions"}}], "checked": False}},
     ]
     if day == "Vendredi":
         daily_items.append({"object": "block", "type": "to_do", "to_do": {"rich_text": [{"type": "text", "text": {"content": "⏱️ Feuille de temps"}}], "checked": False}})
 
-    def h3(text):
-        return {"object": "block", "type": "heading_3", "heading_3": {"rich_text": [{"type": "text", "text": {"content": text}}]}}
+    def h3(text, children):
+        return {"object": "block", "type": "heading_3", "heading_3": {"rich_text": [{"type": "text", "text": {"content": text}}], "is_toggleable": True}, "children": children}
 
     def todo():
         return {"object": "block", "type": "to_do", "to_do": {"rich_text": [], "checked": False}}
@@ -98,18 +100,12 @@ for day in Week:
         return {"object": "block", "type": "bulleted_list_item", "bulleted_list_item": {"rich_text": []}}
 
     inner_block = [
-        h3("Dailys"),
-        *daily_items,
-        h3("AI Champion"),
-        todo(), todo(),
-        h3("Projet 1"),
-        todo(), todo(), todo(), todo(),
-        h3("Projet 2"),
-        todo(), todo(), todo(), todo(),
-        h3("Notes de réunion"),
-        bullet(),
-        h3("Plan pour demain"),
-        bullet(),
+        h3("Quotidien", daily_items),
+        h3("AI Champion", [todo(), todo()]),
+        h3("Projet 1", [todo(), todo(), todo(), todo()]),
+        h3("Projet 2", [todo(), todo(), todo(), todo()]),
+        h3("Notes de réunion", [bullet()]),
+        h3("Plan pour demain", [bullet()]),
     ]
 
     notion.blocks.children.append(block_id=block_id, children=inner_block)
