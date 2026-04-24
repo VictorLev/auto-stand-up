@@ -90,8 +90,8 @@ for day in Week:
     if day == "Vendredi":
         daily_items.append({"object": "block", "type": "to_do", "to_do": {"rich_text": [{"type": "text", "text": {"content": "⏱️ Feuille de temps"}}], "checked": False}})
 
-    def h3(text, children):
-        return {"object": "block", "type": "heading_3", "heading_3": {"rich_text": [{"type": "text", "text": {"content": text}}], "is_toggleable": True}, "children": children}
+    def h3(text):
+        return {"object": "block", "type": "heading_3", "heading_3": {"rich_text": [{"type": "text", "text": {"content": text}}], "is_toggleable": True}}
 
     def todo():
         return {"object": "block", "type": "to_do", "to_do": {"rich_text": [], "checked": False}}
@@ -99,13 +99,16 @@ for day in Week:
     def bullet():
         return {"object": "block", "type": "bulleted_list_item", "bulleted_list_item": {"rich_text": []}}
 
-    inner_block = [
-        h3("Quotidien", daily_items),
-        h3("AI Champion", [todo(), todo()]),
-        h3("Projet 1", [todo(), todo(), todo(), todo()]),
-        h3("Projet 2", [todo(), todo(), todo(), todo()]),
-        h3("Notes de réunion", [bullet()]),
-        h3("Plan pour demain", [bullet()]),
+    sections = [
+        ("Quotidien", daily_items),
+        ("AI Champion", [todo(), todo()]),
+        ("Projet 1", [todo(), todo(), todo(), todo()]),
+        ("Projet 2", [todo(), todo(), todo(), todo()]),
+        ("Notes de réunion", [bullet()]),
+        ("Plan pour demain", [bullet()]),
     ]
 
-    notion.blocks.children.append(block_id=block_id, children=inner_block)
+    for section_name, section_children in sections:
+        response = notion.blocks.children.append(block_id=block_id, children=[h3(section_name)])
+        section_id = response.get("results")[0].get("id")
+        notion.blocks.children.append(block_id=section_id, children=section_children)
