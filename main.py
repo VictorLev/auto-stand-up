@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from datetime import date
+from datetime import date, timedelta
 from notion_client import Client
 import os
 
@@ -9,9 +9,9 @@ load_dotenv()
 # Initialize the client with your Notion API key
 notion = Client(auth=os.getenv("NOTION_KEY"))
 spandupPageId = os.getenv("STANDUP_PAGE_ID")
-today  = str(date.today())
+today = str(date.today() + timedelta(days=7))
 
-Week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+Week = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
 
 # Create a page
 page = notion.pages.create(
@@ -23,7 +23,7 @@ page = notion.pages.create(
             "title": [
                 {
                     "text": {
-                        "content": "📋 Week of ",
+                        "content": "Semaine du ",
                     }
                 },
                 {
@@ -39,13 +39,16 @@ page = notion.pages.create(
     }
 )
 
+# Set page to full width
+notion.pages.update(page_id=page['id'], **{"full_width": True})
+
 # Notes section at the top of the page
 notion.blocks.children.append(block_id=page['id'], children=[
     {
         "object": "block",
         "type": "heading_2",
         "heading_2": {
-            "rich_text": [{"type": "text", "text": {"content": "📓 Notes"}}]
+            "rich_text": [{"type": "text", "text": {"content": "Notes de la semaine"}}]
         }
     },
     {
@@ -55,14 +58,6 @@ notion.blocks.children.append(block_id=page['id'], children=[
     }
 ])
 
-day_emojis = {
-    "Monday": "🌱",
-    "Tuesday": "🔥",
-    "Wednesday": "⚡",
-    "Thursday": "🎯",
-    "Friday": "🎉"
-}
-
 for day in Week:
 
     # Create Day Title
@@ -70,13 +65,13 @@ for day in Week:
     week_block = [
         {
             "object": "block",
-            "type": "heading_1",
+            "type": "heading_2",
             "heading_1": {
                 "rich_text": [
                     {
                         "type": "text",
                         "text": {
-                            "content": f"{day_emojis[day]} {day}"
+                            "content": day
                         }
                     }
                 ],
@@ -87,102 +82,34 @@ for day in Week:
     response = notion.blocks.children.append(block_id=page['id'], children=week_block)
     block_id = response.get("results")[0].get("id")
 
-    to_do_items = [
-        "📧 Check Emails",
-        "🤖 AI Champion task",
+    daily_items = [
+        {"object": "block", "type": "to_do", "to_do": {"rich_text": [{"type": "text", "text": {"content": "📧 Vérifier les courriels"}}], "checked": False}}
     ]
-    if day == "Friday": to_do_items.append("⏱️ Timesheet")
+    if day == "Vendredi":
+        daily_items.append({"object": "block", "type": "to_do", "to_do": {"rich_text": [{"type": "text", "text": {"content": "⏱️ Feuille de temps"}}], "checked": False}})
 
-    to_do_blocks = []
+    def h3(text):
+        return {"object": "block", "type": "heading_3", "heading_3": {"rich_text": [{"type": "text", "text": {"content": text}}]}}
 
-    for item in to_do_items:
-        block = {
-            "object": "block",
-            "type": "to_do",
-            "to_do": {
-                "rich_text": [{
-                    "type": "text",
-                    "text": {"content": item}
-                }],
-                "checked": False
-            }
-        }
-        to_do_blocks.append(block)
+    def todo():
+        return {"object": "block", "type": "to_do", "to_do": {"rich_text": [], "checked": False}}
+
+    def bullet():
+        return {"object": "block", "type": "bulleted_list_item", "bulleted_list_item": {"rich_text": []}}
 
     inner_block = [
-        # Daily Checks Block
-        {
-            "object": "block",
-            "type": "heading_2",
-            "heading_2": {
-                "rich_text": [{
-                    "type": "text",
-                    "text": {"content": "✅ Daily Checks"}
-                }]
-            }
-        },
-        *to_do_blocks,
-
-        # To Dos Block
-        {
-            "object": "block",
-            "type": "heading_2",
-            "heading_2": {
-                "rich_text": [
-                    {
-                        "type": "text",
-                        "text": {"content": "📝 To Dos"}
-                    }
-                ]
-            }
-        },
-        {
-            "object": "block",
-            "type": "heading_3",
-            "heading_3": {
-                "rich_text": [
-                    {
-                        "type": "text",
-                        "text": {"content": "☀️ Morning"}
-                    }
-                ]
-            }
-        },
-        {
-            "object": "block",
-            "type": "heading_3",
-            "heading_3": {
-                "rich_text": [
-                    {
-                        "type": "text",
-                        "text": {"content": "🌆 Afternoon"}
-                    }
-                ]
-            }
-        },
+        h3("Dailys"),
+        *daily_items,
+        h3("AI Champion"),
+        todo(), todo(),
+        h3("Projet 1"),
+        todo(), todo(), todo(), todo(),
+        h3("Projet 2"),
+        todo(), todo(), todo(), todo(),
+        h3("Notes de réunion"),
+        bullet(),
+        h3("Plan pour demain"),
+        bullet(),
     ]
 
     notion.blocks.children.append(block_id=block_id, children=inner_block)
-
-notion.blocks.children.append(block_id=page['id'], children=
-    [
-    # Next Week Block
-        {
-            "object": "block",
-            "type": "heading_2",
-            "heading_2": {
-                "rich_text": [
-                    {
-                        "type": "text",
-                        "text": {"content": "🔮 Next week items"}
-                    }
-                ]
-            }
-        },
-        {
-            "object": "block",
-            "type": "bulleted_list_item",
-            "bulleted_list_item": {"rich_text": []}
-        }
-    ]
-)
