@@ -2,6 +2,16 @@ from dotenv import load_dotenv
 from datetime import date, timedelta
 from notion_client import Client
 import os
+import urllib.request
+import json
+
+def get_random_quote():
+    try:
+        with urllib.request.urlopen("https://zenquotes.io/api/random") as response:
+            data = json.loads(response.read())
+            return f'"{data[0]["q"]}" — {data[0]["a"]}'
+    except:
+        return "Make each day your masterpiece."
 
 # Load the .env file
 load_dotenv()
@@ -38,9 +48,6 @@ page = notion.pages.create(
         }
     }
 )
-
-# Set page to full width
-notion.pages.update(page_id=page['id'], **{"full_width": True})
 
 # Notes section at the top of the page
 notion.blocks.children.append(block_id=page['id'], children=[
@@ -81,6 +88,17 @@ for day in Week:
     ]
     response = notion.blocks.children.append(block_id=page['id'], children=week_block)
     block_id = response.get("results")[0].get("id")
+
+    quote_text = get_random_quote()
+    notion.blocks.children.append(block_id=block_id, children=[
+        {
+            "object": "block",
+            "type": "quote",
+            "quote": {
+                "rich_text": [{"type": "text", "text": {"content": quote_text}}]
+            }
+        }
+    ])
 
     daily_items = [
         {"object": "block", "type": "to_do", "to_do": {"rich_text": [{"type": "text", "text": {"content": "📧 Vérifier les courriels"}}], "checked": False}},
